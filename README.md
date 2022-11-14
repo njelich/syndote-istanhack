@@ -9,13 +9,13 @@ To launch the game, you need to:
 2. 🏗️ Upload the contracts on chain
 3. 🖥️ Build and run user interface
 
-## 1. Build Master and Player contracts
+## ⚒️ Build Master and Player contracts
 
 1. Get the source code of [Master contract](https://github.com/gear-tech/syndote-game/tree/master/program/syndote) and [Player contract](https://github.com/gear-tech/syndote-game/tree/master/program/player).
 2. Modify Player's contract as you wich to acheive optimal game strategy. 
 3. Build contracts as described in [program/README.md](https://github.com/gear-tech/syndote-game/blob/master/program/README.md#building-contracts).
 
-## Upload the contracts on chain
+## 🏗️ Upload the contracts on chain
 
 ###  Run gear node locally
 
@@ -36,7 +36,7 @@ You can deploy contracts using `idea.gear-tech.io`.
 1. In the network selector choose wss://node-workshop.gear.rs network.
 2. Upload and run Master and Player contracts and register the player as described in [program/README.md](https://github.com/gear-tech/syndote-game/blob/master/program/README.md#running-the-game).
 
-## Build and run user interface
+## 🖥️ Build and run user interface
 
 Download this repository locally and run game application using instruction from [frontend/README.md](https://github.com/gear-tech/syndote-game/tree/master/frontend#readme).
 
