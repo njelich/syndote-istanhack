@@ -2,7 +2,7 @@
 
 Syndote is a Monopoly-like decentralized game that works completely on-chain. Players compete with each other by implementing various playing strategies uploaded as smart-contracts into the network.
 
-Syndote consists of Master contract and Player contracts. Master contract is the main contract that starts and controls the game. Player contracts implement the game strategy which can be unique for each participant of the game. All moves in the game take place automatically, but it is possible to jump to each one individually to analyze the player's strategy.
+Syndote consists of Master contract and Player contracts. Master contract is the main contract that starts and controls the game. Player contracts implement the game strategies that can be unique for each participant of the game. All moves in the game take place automatically, but it is possible to jump to each one individually to analyze the player's strategy.
 
 To launch the game, you need to:
 1. ⚒️ Build Master and Player contracts
@@ -12,10 +12,10 @@ To launch the game, you need to:
 ## ⚒️ Build Master and Player contracts
 
 1. Get the source code of [Master contract](https://github.com/gear-tech/syndote-game/tree/master/program/syndote) and [Player contract](https://github.com/gear-tech/syndote-game/tree/master/program/player).
-2. Modify Player's contract as you wich to acheive optimal game strategy. 
+2. Modify Player's contract as you wish to achieve optimal game strategy. 
 3. Build contracts as described in [program/README.md](https://github.com/gear-tech/syndote-game/blob/master/program/README.md#building-contracts).
 
-## 🏗️ Upload the contracts on chain
+## 🏗️ Upload contracts on chain
 
 ###  Run gear node locally
 
