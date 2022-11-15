@@ -20,53 +20,36 @@ async fn main() {
         .get_mut(&exec::program_id())
         .expect("Players: Cant be `None`");
     if my_player.in_jail {
-        if my_player.balance <= FINE {
-            let reply: GameEvent = msg::send_for_reply_as(
-                monopoly_id,
-                GameAction::ThrowRoll {
-                    pay_fine: false,
-                    properties_for_sale: None,
-                },
-                0,
-            )
-            .expect("Error in sending a message `GameAction::ThrowRoll`")
-            .await
-            .expect("Unable to decode `GameEvent");
+        let reply: GameEvent = msg::send_for_reply_as(
+            monopoly_id,
+            GameAction::ThrowRoll {
+                pay_fine: false,
+                properties_for_sale: None,
+            },
+            0,
+        )
+        .expect("Error in sending a message `GameAction::ThrowRoll`")
+        .await
+        .expect("Unable to decode `GameEvent");
 
-            if let GameEvent::Jail { in_jail, position } = reply {
-                if !in_jail {
-                    my_player.position = position;
-                } else {
-                    msg::reply("", 0).expect("Error in sending a reply to monopoly contract");
-                    return;
-                }
+        if let GameEvent::Jail { in_jail, position } = reply {
+            if !in_jail {
+                my_player.position = position;
+            } else {
+                msg::reply("", 0).expect("Error in sending a reply to monopoly contract");
+                return;
             }
-        } else {
-            msg::send_for_reply_as::<_, GameEvent>(
-                monopoly_id,
-                GameAction::ThrowRoll {
-                    pay_fine: true,
-                    properties_for_sale: None,
-                },
-                0,
-            )
-            .expect("Error in sending a message `GameAction::ThrowRoll`")
-            .await
-            .expect("Unable to decode `GameEvent");
-
-            msg::reply("", 0).expect("Error in sending a reply to monopoly contract");
-            return;
         }
     }
 
     let position = my_player.position;
 
     // debug!("BALANCE {:?}", my_player.balance);
-    let (my_cell, free_cell, gears) =
-        if let Some((account, gears, _, _)) = &message.properties[position as usize] {
+    let (my_cell, free_cell, gears, price) =
+        if let Some((account, gears, price, _)) = &message.properties[position as usize] {
             let my_cell = account == &exec::program_id();
             let free_cell = account == &ActorId::zero();
-            (my_cell, free_cell, gears)
+            (my_cell, free_cell, gears, price)
         } else {
             msg::reply("", 0).expect("Error in sending a reply to monopoly contract");
             return;
@@ -87,34 +70,23 @@ async fn main() {
             .expect("Unable to decode `GameEvent");
             msg::reply("", 0).expect("Error in sending a reply to monopoly contract");
             return;
-        } else {
-            //debug!("UPGRADE");
+        }
+    }
+
+    if free_cell {
+        if my_player.balance > price + FINE {
+            //debug!("BUY CELL");
             msg::send_for_reply_as::<_, GameEvent>(
                 monopoly_id,
-                GameAction::Upgrade {
+                GameAction::BuyCell {
                     properties_for_sale: None,
                 },
                 0,
             )
-            .expect("Error in sending a message `GameAction::Upgrade`")
+            .expect("Error in sending a message `GameAction::BuyCell`")
             .await
             .expect("Unable to decode `GameEvent");
-            msg::reply("", 0).expect("Error in sending a reply to monopoly contract");
-            return;
         }
-    }
-    if free_cell {
-        //debug!("BUY CELL");
-        msg::send_for_reply_as::<_, GameEvent>(
-            monopoly_id,
-            GameAction::BuyCell {
-                properties_for_sale: None,
-            },
-            0,
-        )
-        .expect("Error in sending a message `GameAction::BuyCell`")
-        .await
-        .expect("Unable to decode `GameEvent");
     } else if !my_cell {
         //debug!("PAY RENT");
         msg::send_for_reply_as::<_, GameEvent>(
