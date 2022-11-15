@@ -31,7 +31,7 @@ Upload and run Master and Player contracts and register the player as described 
 
 ### Run program in Gear Network
 
-You can deploy contracts using `idea.gear-tech.io`. 
+You can deploy contracts using [idea.gear-tech.io](https://idea.gear-tech.io). 
 
 1. In the network selector choose wss://node-workshop.gear.rs network.
 2. Upload and run Master and Player contracts and register the player as described in [program/README.md](https://github.com/gear-tech/syndote-game/blob/master/program/README.md#running-the-game).
