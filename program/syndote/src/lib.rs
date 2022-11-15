@@ -173,7 +173,28 @@ impl Game {
                         player_info.round = self.round;
                     }
                     // free cells (it can be lottery or penalty): TODO as a task on hackathon
-                    2 | 4 | 7 | 16 | 20 | 30 | 33 | 36 | 38 => {
+                    2 | 7 | 20 | 33 | 38 => {
+                        let (r1, r2) = get_rolls();
+                        if r1 + r2 < 3 {
+                            player_info.penalty += 1;
+                        } else if r1 + r2 < 11 {
+                            player_info.balance += ((2 * r1 - r2) * 100) as u32;
+                        } else {
+                            player_info.penalty = 0;
+                        }
+                        player_info.round = self.round;
+                    }
+                    // free cells (it can be lottery or penalty): TODO as a task on hackathon
+                    4 | 16 | 30 | 36 => {
+                        let (r1, r2) = get_rolls();
+                        if r1 + r2 < 4 {
+                            player_info.position = JAIL_POSITION;
+                            player_info.in_jail = true;
+                        } else if r1 + r2 < 10 {
+                            player_info.position += 2;
+                        } else {
+                            player_info.balance += 1000;
+                        }
                         player_info.round = self.round;
                     }
                     _ => {
