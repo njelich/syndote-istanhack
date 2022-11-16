@@ -179,7 +179,7 @@ impl Game {
                         if r1 + r2 < 3 {
                             player_info.penalty += 1;
                         } else if r1 + r2 < 11 {
-                            player_info.balance += ((2 * r1 - r2) * 100) as u32;
+                            player_info.balance += ((2 * r1 + r2) * 100) as u32;
                         } else {
                             player_info.penalty = 0;
                         }
