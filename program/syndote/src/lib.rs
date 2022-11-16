@@ -34,6 +34,7 @@ pub struct Game {
     ownership: Vec<ActorId>,
     game_status: GameStatus,
     winner: ActorId,
+    lottery: u32,
 }
 
 static mut GAME: Option<Game> = None;
@@ -185,7 +186,7 @@ impl Game {
                         player_info.round = self.round;
                     }
                     // free cells (it can be lottery or penalty): these were incorrect
-                    16 | 20 | 24 | 30 | 36 => {
+                    16 | 24 | 30 => {
                         let (r1, r2) = get_rolls();
                         if r1 + r2 < 4 {
                             player_info.position = JAIL_POSITION;
@@ -194,6 +195,18 @@ impl Game {
                             player_info.position += 2;
                         } else {
                             player_info.balance += 1000;
+                        }
+                        player_info.round = self.round;
+                    }
+                    LOTTERY_POSITION => {
+                        let (r1, r2) = get_rolls();
+                        if r1 + r2 < 1 {
+                            self.lottery = 0;
+                        } else if r1 + r2 < 10 {
+                            self.lottery += FINE;
+                        } else {
+                            player_info.balance += self.lottery;
+                            self.lottery = 0;
                         }
                         player_info.round = self.round;
                     }
