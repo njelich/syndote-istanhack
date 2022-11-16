@@ -57,7 +57,7 @@ async fn main() {
 
     if my_cell {
         //debug!("ADD GEAR");
-        if gears.len() < 3 {
+        if gears.len() < 3 && my_player.balance > COST_FOR_UPGRADE + FINE {
             msg::send_for_reply_as::<_, GameEvent>(
                 monopoly_id,
                 GameAction::AddGear {
