@@ -172,8 +172,8 @@ impl Game {
                         player_info.balance += NEW_CIRCLE;
                         player_info.round = self.round;
                     }
-                    // free cells (it can be lottery or penalty): TODO as a task on hackathon
-                    2 | 7 | 20 | 33 | 38 => {
+                    // free cells (it can be lottery or penalty): these were incorrect
+                    2 | 13 | 18 | 22 | 27 | 36 => {
                         let (r1, r2) = get_rolls();
                         if r1 + r2 < 3 {
                             player_info.penalty += 1;
@@ -184,8 +184,8 @@ impl Game {
                         }
                         player_info.round = self.round;
                     }
-                    // free cells (it can be lottery or penalty): TODO as a task on hackathon
-                    4 | 16 | 30 | 36 => {
+                    // free cells (it can be lottery or penalty): these were incorrect
+                    16 | 20 | 24 | 30 | 36 => {
                         let (r1, r2) = get_rolls();
                         if r1 + r2 < 4 {
                             player_info.position = JAIL_POSITION;
